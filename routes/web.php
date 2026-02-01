@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\Route;
     });
 
 
+    Route::get('/sinhvien', function (){ return view('Auth.LoginSV'); });
+    Route::post('/loginSV-action', [\App\Http\Controllers\AuthController::class, 'loginSV_action']);
 
     Route::prefix('product')->group(function () {
-        Route::controller(ProductController::class)->group(function () {
+        Route::controller(\App\Http\Controllers\ProductController::class)->group(function () {
             Route::get('/', 'index');
             Route::get('/add', 'create')->name('add');
             Route::get('detail/{id?}', 'getDetail');
