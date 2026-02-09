@@ -13,29 +13,33 @@ use Illuminate\Support\Facades\Route;
     Route::get('/{id?}', function(string $id = '123'){
         return view('product.productDetail', ['id' => $id]);
     });
+});
+Route::get('/sinhvien', function (){ return view('Auth.LoginSV'); });
+Route::post('/loginSV-action', [\App\Http\Controllers\AuthController::class, 'loginSV_action']);
 
-
-    Route::get('/sinhvien', function (){ return view('Auth.LoginSV'); });
-    Route::post('/loginSV-action', [\App\Http\Controllers\AuthController::class, 'loginSV_action']);
-
-    Route::prefix('product')->group(function () {
-        Route::controller(\App\Http\Controllers\ProductController::class)->group(function () {
-            Route::get('/', 'index');
-            Route::get('/add', 'create')->name('add');
-            Route::get('detail/{id?}', 'getDetail');
-            Route::post('/store', 'store')->name('store');
-        });
+Route::prefix('product')->group(function () {
+    Route::controller(\App\Http\Controllers\ProductController::class)->group(function () {
+        Route::get('/', 'index');
+        Route::get('/add', 'create')->name('add');
+        Route::get('detail/{id?}', 'getDetail');
+        Route::post('/store', 'store')->name('store');
     });
+});
 
-    Route::get('login', [\App\Http\Controllers\AuthController::class, 'login']);
-    Route::post('checklogin', [\App\Http\Controllers\AuthController::class, 'checkLogin']);
-    Route::get('register', [\App\Http\Controllers\AuthController::class, 'register']);
-    Route::post('register-action', [\App\Http\Controllers\AuthController::class, 'registerAction']);
+Route::get('login', [\App\Http\Controllers\AuthController::class, 'login']);
+Route::post('checklogin', [\App\Http\Controllers\AuthController::class, 'checkLogin']);
+Route::get('register', [\App\Http\Controllers\AuthController::class, 'register']);
+Route::post('register-action', [\App\Http\Controllers\AuthController::class, 'registerAction']);
 
-        
 
-//        Route::fallback(function () {
-//            return response()
-//                ->view('error.404', [], 404);
-//        });
+
+Route::prefix('category')->group(function () {
+    Route::controller(\App\Http\Controllers\CategoryController::class)->group(function () {
+        Route::get('/', 'index')->name('category.index');
+        Route::get('/create', 'create')->name('category.create');
+        Route::post('/create', 'store')->name('category.store');
+        Route::get('/{category}/edit', 'edit')->name('category.edit');
+        Route::put('/{category}/edit', 'update')->name('category.update');
+
+    });
 });
