@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
     Route::get('/', function () {
-    return view('welcome');
+        return view('admin.admin');
 });
     Route::prefix('product') -> group(function(){
     Route::get('/', [\App\Http\Controllers\ProductController::class, 'index'])->name('product.index');
@@ -31,4 +31,11 @@ use Illuminate\Support\Facades\Route;
     Route::post('checklogin', [\App\Http\Controllers\AuthController::class, 'checkLogin']);
     Route::get('register', [\App\Http\Controllers\AuthController::class, 'register']);
     Route::post('register-action', [\App\Http\Controllers\AuthController::class, 'registerAction']);
+
+        
+
+//        Route::fallback(function () {
+//            return response()
+//                ->view('error.404', [], 404);
+//        });
 });
